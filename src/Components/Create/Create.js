@@ -63,10 +63,10 @@ const Create = () => {
                         </Row>
                         <Row className='mt-2 ' >
 
-                            <Col className='col-2'>
+                            <Col className='col-lg-2  col-md-6  col-sm-12 col-xs-12 '>
                                 <label for="p-level" className='form-label'>level</label>
                             </Col>
-                            <Col className='col-2'>
+                            <Col className='col-lg-2  col-md-6  col-sm-12 col-xs-12  '>
                                 <select className='form-select bg-dark text-white' id='p-level' onChange={(e) => setLevel(e.target.value)} value={level}>
                                     <option  selected value=""></option>
                                     <option  value="easy">Easy</option>
@@ -77,10 +77,10 @@ const Create = () => {
 
                             <Col>
                                 <Row>
-                                    <Col className='col-2'>
+                                    <Col className='col-lg-2  col-md-6  col-sm-12 col-xs-12'>
                                         <label for="p-topic" className='form-label'>Topics</label>
                                     </Col>
-                                    <Col >
+                                    <Col className='col-lg-10  col-md-6  col-sm-12 col-xs-12' >
                                         <input type="text" className='form-control bg-dark text-white' id='p-topic' onChange={(e) => setTopic(e.target.value)} value={topic} placeholder='Topics' />
                                     </Col>
                                 </Row>
