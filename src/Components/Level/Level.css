@@ -1,0 +1,21 @@
+.easy{
+    color: rgb(21, 180, 21);
+}
+.medium{
+    color: orange;
+}
+.hard{
+    color: red;
+}
+
+.span-1{
+    font-family: sans-serif;
+    padding: 3px;
+    border-radius: 4px;
+    background-color: #3e484a;
+    margin: 2px;
+}
+
+.span-1:hover{
+    color: aliceblue;
+}

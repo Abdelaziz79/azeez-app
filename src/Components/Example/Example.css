@@ -1,0 +1,11 @@
+b {
+    color: aliceblue;
+}
+
+p {
+    color: rgb(203, 210, 215);
+}
+
+p:hover {
+    color: aliceblue;
+}

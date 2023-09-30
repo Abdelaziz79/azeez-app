@@ -1,0 +1,14 @@
+
+.span-1{
+    font-family: sans-serif;
+    padding: 3px;
+    border-radius: 4px;
+    background-color: #3e484a;
+    margin: 2px;
+    color: rgb(203, 210, 215);
+
+}
+
+.span-1:hover{
+    color: aliceblue;
+}

@@ -1,0 +1,105 @@
+{
+  "Problems": [
+    {
+      "name": "1. Two Sum",
+      "url": "https://leetcode.com/problems/two-sum/description/",
+      "level": "easy",
+      "code": "class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        unordered_map<int,int> map;\n        vector<int> ans(2);\n        \n        for(int i=0;i<nums.size();i++){\n\n            int t = target - nums[i];\n            if(map.find(t) != map.end()){\n                ans[0] = map[t];\n                ans[1] = i;\n                return ans;\n            }\n\n            map[nums[i]] = i;\n        }\n        return ans;\n    }\n};",
+      "des": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\n\nYou can return the answer in any order.",
+      "topic": "Array, Hash Table",
+      "id": 1,
+      "up": 1,
+      "down": 0,
+      "pin": false
+    },
+    {
+      "name": "2. Add Two Numbers",
+      "url": "https://leetcode.com/problems/add-two-numbers/",
+      "level": "medium",
+      "code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {\n        ListNode* dummy = new ListNode(0);\n        ListNode* cur = dummy;\n        int carry = 0;\n        while(l1 || l2 || carry){\n            int x = l1 ? l1->val : 0;\n            int y = l2 ? l2->val : 0;\n            int sum = x + y + carry;\n            cur -> next = new ListNode(sum % 10);\n            carry = sum / 10;\n            cur = cur -> next;\n            l1 = l1? l1 -> next : NULL;\n            l2 = l2? l2 -> next : NULL ;\n        }\n        return dummy->next;\n    }\n};",
+      "des": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\n\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself.",
+      "topic": "Linked List, Math, Recursion",
+      "id": 2,
+      "pin": false
+    },
+    {
+      "name": "3. Longest Substring Without Repeating Characters",
+      "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/description/",
+      "level": "medium",
+      "code": "class Solution {\npublic:\n    int lengthOfLongestSubstring(string s) {\n        int n = s.size();\n        int left = 0, right = 0, res = 0;\n        unordered_set<char> set1;\n        while(right < n){\n          if(!set1.count(s[right])){\n            set1.insert(s[right++]);\n            res = max(res,right - left);\n          } else set1.erase(s[left++]);\n        }\n        return res;\n    }\n};",
+      "des": "Given a string s, find the length of the longest \nsubstring\n without repeating characters.",
+      "topic": "Hash Table, String, Sliding Window",
+      "id": 3,
+      "pin": false
+    },
+    {
+      "name": "4. Median of Two Sorted Arrays",
+      "url": "https://leetcode.com/problems/median-of-two-sorted-arrays/",
+      "level": "hard",
+      "code": "class Solution {\npublic:\n    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {\n        int m = nums1.size();\n        int n = nums2.size();\n        \n        if (m > n) {\n            return findMedianSortedArrays(nums2, nums1);\n        }\n        \n        int total = m + n;\n        \n        int low = 0;\n        int high = m;\n        \n        double result = 0.0;\n        \n        while (low <= high) {\n            // nums1\n            int i = low + (high - low) / 2;\n            // nums2\n            int j = (total + 1) / 2 - i;\n            \n            int left1 = (i > 0) ? nums1[i - 1] : INT_MIN;\n            int right1 = (i < m) ? nums1[i] : INT_MAX;\n            int left2 = (j > 0) ? nums2[j - 1] : INT_MIN;\n            int right2 = (j < n) ? nums2[j] : INT_MAX;\n            \n            // partition is correct\n            if (left1 <= right2 && left2 <= right1) {\n                // even\n                if (total % 2 == 0) {\n                    result = (max(left1, left2) + min(right1, right2)) / 2.0;\n                // odd\n                } else {\n                    result = max(left1, left2);\n                }\n                break;\n            } else if (left1 > right2) {\n                high = i - 1;\n            } else {\n                low = i + 1;\n            }\n        }\n        return result;\n    }\n};",
+      "des": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.\n\nThe overall run time complexity should be O(log (m+n)).",
+      "topic": "Array, Binary Search, Divide and Conquer",
+      "id": 4,
+      "up": 6,
+      "down": -1,
+      "pin": false
+    },
+    {
+      "name": "130. Surrounded Regions",
+      "url": "https://leetcode.com/problems/surrounded-regions/description/",
+      "level": "medium",
+      "code": "class Solution {\npublic:\n\n    void dfs(int r,int c,vector<vector<char>>& board){\n        if(r < 0 || c < 0 || r == board.size() || c == board[0].size() || board[r][c] != 'O')\n            return;\n        \n        board[r][c] = 'T';\n\n        dfs(r+1,c,board);\n        dfs(r-1,c,board);\n        dfs(r,c+1,board);\n        dfs(r,c-1,board);\n\n    }\n\n    void solve(vector<vector<char>>& board) {\n        int n = board.size();\n        int m = board[0].size();\n\n        for(int r = 0;r<n;r++){\n            dfs(r,0,board);\n            dfs(r,m-1,board);\n        }\n        \n        for(int c = 0;c<m;c++){\n            dfs(0,c,board);\n            dfs(n-1,c,board);\n        }\n\n        for(int i=0;i<n;i++){\n            for(int j= 0 ;j<m;j++){\n                if(board[i][j] == 'O') board[i][j] = 'X';\n            }\n        }\n\n        for(int i=0;i<n;i++){\n            for(int j= 0 ;j<m;j++){\n                if(board[i][j] == 'T') board[i][j] = 'O';\n            }\n        }\n    }\n};",
+      "des": "Given an m x n matrix board containing 'X' and 'O', capture all regions that are 4-directionally surrounded by 'X'.\n\nA region is captured by flipping all 'O's into 'X's in that surrounded region.",
+      "topic": "Array, Depth-First Search, Breadth-First Search, Union Find, Matrix",
+      "id": 5,
+      "pin": false
+    },
+    {
+      "name": "994. Rotting Oranges",
+      "url": "https://leetcode.com/problems/rotting-oranges/description/",
+      "level": "medium",
+      "code": "class Solution {\npublic:\n    int orangesRotting(vector<vector<int>>& grid) {\n        \n        int res = 0;\n        int fresh = 0;\n\n        int n = grid.size();\n        int m = grid[0].size();\n\n        queue<pair<int,int>> q;\n\n        for(int i=0;i<n;i++){\n            for(int j=0;j<m;j++){\n                if(grid[i][j] == 2) q.push({i,j});\n                else if(grid[i][j] == 1) fresh++;\n            }\n        }\n\n        while(!q.empty()){\n            int sz = q.size();\n            bool f = false;\n            for(int i = 0 ; i < sz ; i++){\n                \n                auto front = q.front(); q.pop();\n\n                if(front.first < 0 || front.second < 0 || front.first >= n || front.second >= m ||grid[front.first][front.second] == 0 )\n                    continue;\n                \n                if(grid[front.first][front.second] == 1){\n                    f = true;\n                    fresh--;\n                } \n                \n                grid[front.first][front.second] = 0;\n\n                q.push({front.first + 1,front.second});\n                q.push({front.first - 1,front.second});\n                q.push({front.first,front.second + 1});\n                q.push({front.first,front.second - 1});\n            }\n            if(f) res++;\n        }\n\n        if(fresh!=0) return -1;\n        return res;\n\n    }\n};",
+      "des": "You are given an m x n grid where each cell can have one of three values:\n\n0 representing an empty cell,\n1 representing a fresh orange, or\n2 representing a rotten orange.\nEvery minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten.\n\nReturn the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.\n\n ",
+      "topic": "Array, Breadth-First Search, Matrix",
+      "id": 6,
+      "pin": false
+    },
+    {
+      "name": "207. Course Schedule",
+      "url": "https://leetcode.com/problems/course-schedule/",
+      "level": "medium",
+      "code": "class Solution {\npublic:\n    bool dfs(int i,vector<vector<int>>& map,vector<bool>&can,vector<bool>&seen){\n        if(can[i]) return true;\n        if(seen[i]) return false;\n        if(map[i].empty()) return can[i] = true;\n        seen[i] = true;\n        for(int node: map[i]){\n            if(!dfs(node,map,can,seen)) return can[node] = false;\n        }\n        seen[i] = false;\n        map[i] = {};\n        return can[i] = true;\n    }\n    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {\n        \n        vector<vector<int>> map(numCourses);\n        vector<bool>seen(numCourses,false);\n        vector<bool>can(numCourses,false);\n\n        for(auto& vc:prerequisites){\n            map[vc[0]].push_back(vc[1]);\n        }\n\n        for(int i=0;i<numCourses;i++){\n            if(can[i]) continue;\n            if(!dfs(i,map,can,seen)) return false;  \n        }\n\n        return true;\n    }\n};",
+      "des": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.\n\nFor example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.\nReturn true if you can finish all courses. Otherwise, return false.",
+      "topic": "Depth-First Search, Breadth-First Search, Graph, Topological Sort",
+      "id": 7,
+      "pin": false
+    },
+    {
+      "name": "210. Course Schedule II",
+      "url": "https://leetcode.com/problems/course-schedule-ii/description/",
+      "level": "medium",
+      "code": "class Solution {\npublic:\n    vector<int> res;\n\n    bool dfs(int i,vector<vector<int>>&map,vector<bool>&seen,vector<bool>& can){\n        if(seen[i]) return false;\n        if(can[i]) return true;\n        \n        if(map[i].empty()){\n            res.push_back(i);\n            return can[i] = true;\n        } \n        seen[i] = true;\n        for(int node:map[i]){\n            if(dfs(node,map,seen,can)) can[i] = true;\n            else return false;\n        }\n        if(can[i]) res.push_back(i);\n        seen[i] = false;\n        return can[i];\n    }\n\n    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {\n        vector<vector<int>> map(numCourses);\n\n        for(auto & vc:prerequisites){\n            map[vc[0]].push_back(vc[1]);\n        }\n\n        vector<bool>seen(numCourses);\n        vector<bool>can(numCourses);\n\n        for(int i =0;i<numCourses;i++){\n            if(!dfs(i,map,seen,can)) return {};\n        }\n        \n        return res;\n    }\n};",
+      "des": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.\n\nFor example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.\nReturn the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.",
+      "topic": "Depth-First Search, Breadth-First Search, Graph, Topological Sort",
+      "id": 8
+    },
+    {
+      "name": "684. Redundant Connection",
+      "url": "https://leetcode.com/problems/redundant-connection/description/",
+      "level": "medium",
+      "code": "class Solution {\npublic:\n\n    int getParent(int i,vector<int>&parent){\n        if(parent[i] == i) return i;\n        return parent[i] = getParent(parent[i],parent);\n    }\n\n    bool unionF(int i,int j,vector<int>&parent,vector<int>&rank){\n        int pi = getParent(i,parent);\n        int pj = getParent(j,parent);\n\n        if(pi == pj) return false;\n\n        if(rank[pi] > rank[pj]){\n            parent[pj] = pi;\n            rank[pi] += rank[pj];\n        }\n        else{\n            parent[pi] = pj;\n            rank[pj] += rank[pi];\n        }\n\n        return true;\n    }\n\n    vector<int> findRedundantConnection(vector<vector<int>>& edges) {\n        int n = edges.size();\n\n        vector<int> parent;\n        vector<int> rank;\n\n        for(int i = 0 ; i < n+1 ;i++){\n            parent.push_back(i);\n            rank.push_back(1);\n        }\n\n        for(auto&vc:edges){\n            if(!unionF(vc[0],vc[1],parent,rank)) return vc;\n        }\n\n        return {-1,-1};\n    }\n};",
+      "des": "In this problem, a tree is an undirected graph that is connected and has no cycles.\n\nYou are given a graph that started as a tree with n nodes labeled from 1 to n, with one additional edge added. The added edge has two different vertices chosen from 1 to n, and was not an edge that already existed. The graph is represented as an array edges of length n where edges[i] = [ai, bi] indicates that there is an edge between nodes ai and bi in the graph.\n\nReturn an edge that can be removed so that the resulting graph is a tree of n nodes. If there are multiple answers, return the answer that occurs last in the input.",
+      "topic": "Depth-First Search, Breadth-First Search, Union Find, Graph",
+      "id": 9
+    },
+    {
+      "name": "663 · Walls and Gates",
+      "url": "https://www.lintcode.com/problem/663/",
+      "level": "medium",
+      "code": "/*\n    Given grid: -1 wall, 0 gate, INF empty, fill each empty w/ dist to nearest gate\n\n    BFS traversal, shortest path from each gate to all empty rooms\n    Each gate only looks at within 1 space, then next gate, guarantees shortest\n\n    Time: O(m x n)\n    Space: O(m x n)\n*/\n\nclass Solution {\npublic:\n    void wallsAndGates(vector<vector<int>>& rooms) {\n        int m = rooms.size();\n        int n = rooms[0].size();\n\n        queue<pair<int, int>> q;\n        for (int i = 0; i < m; i++) {\n            for (int j = 0; j < n; j++) {\n                if (rooms[i][j] == 0) {\n                    q.push({i, j});\n                }\n            }\n        }\n\n        while (!q.empty()) {\n            int row = q.front().first;\n            int col = q.front().second;\n            q.pop();\n\n            for (int i = 0; i < 4; i++) {\n                int x = row + dirs[i][0];\n                int y = col + dirs[i][1];\n\n                if (x < 0 || x >= m || y < 0 || y >= n || rooms[x][y] != INT_MAX) {\n                    continue;\n                }\n\n                rooms[x][y] = rooms[row][col] + 1;\n                q.push({x, y});\n            }\n        }\n    }\nprivate:\n    vector<vector<int>> dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};\n};",
+      "des": "You are given a m x n 2D grid initialized with these three possible values.\n\n- `1` - A wall or an obstacle.\n\n`0` - A gate.\n\n`INF` - Infinity means an empty room. We use the value `2^31 - 1 = 2147483647` to represent INF as you may assume that the distance to a gate is less than `2147483647`.\n\nFill each empty room with the distance to its nearest gate. If it is impossible to reach a `Gate`, that room should remain filled with `INF`",
+      "topic": "Depth-First Search, Breadth-First Search, Graph",
+      "id": 10
+    }
+  ]
+}
