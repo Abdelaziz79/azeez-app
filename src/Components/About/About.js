@@ -15,7 +15,7 @@ const About = () => {
                             </Col>
                             <Col>
                                 <Card.Title className="text-start">
-                                    <h1 className="display-1 text-white">About</h1>
+                                    <h1 className="display-1 text-white">About Us</h1>
                                     <p>This is a website that helps you to solve problems related to computer science and mathematics </p>
                                 </Card.Title>
                             </Col>
