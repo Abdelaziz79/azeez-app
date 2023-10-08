@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 
-import img1 from "../../Assets/Images/photo_2023-09-29_15-15-19.jpg";
+import img1 from "../../Assets/Images/p.png";
 
 const About = () => {
     return (
